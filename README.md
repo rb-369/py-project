@@ -1,52 +1,295 @@
-# Online Food Ordering Desktop Application
+# FoodHub - Online Food Delivery Web Application
 
-A complete, feature-rich Python Tkinter GUI application connected to a MySQL database, designed for a diploma final practical submission. This project demonstrates Object-Oriented Programming (OOP), modular design, database connectivity, error handling, and modern UI design.
+A modern, fully-featured online food delivery application built with **Flask** backend and responsive **HTML/CSS/JavaScript** frontend.
 
-## Folder Structure
+**Converted from the original Tkinter desktop application to a professional web-based platform.**
+
+## 🚀 Features
+
+### User Features
+- ✅ **User Registration & Login** - Secure authentication with password hashing
+- ✅ **Food Menu Display** - Browse all available food items with descriptions and prices
+- ✅ **Search Functionality** - Real-time search through menu items
+- ✅ **Shopping Cart** - Add/remove items, update quantities
+- ✅ **Checkout** - Complete order with delivery address and phone number
+- ✅ **Order History** - View past orders and their details
+- ✅ **Responsive Design** - Works perfectly on desktop, tablet, and mobile devices
+- ✅ **Modern UI** - Clean, attractive, and professional interface
+
+### Technical Features
+- 🔒 **Secure Password Hashing** - Werkzeug security for user passwords
+- 📦 **RESTful API** - Backend API endpoints for all operations
+- 💾 **SQLite Database** - Persistent storage for users, orders, and menu items
+- 🎨 **Bootstrap 5** - Responsive CSS framework
+- ⚡ **Real-time Updates** - Dynamic cart updates with fetch API
+- 📱 **Mobile Optimized** - Touch-friendly interface
+
+## 📁 Project Structure
 
 ```
-python-project/
+py-project/
+├── app.py                      # Main Flask application
+├── config.py                   # Configuration settings
+├── setup_db.py                 # Database setup script
+├── requirements.txt            # Python dependencies
 │
-├── main.py                 # Application entry point
-├── db.py                   # MySQL database connection & CRUD operations
-├── auth.py                 # Login & Registration module
-├── menu.py                 # Food menu display, search, and cart management
-├── billing.py              # Bill generation and receipt window
-├── history.py              # Order history viewing module
-├── config.py               # Constants, colors, and database credentials
-├── schema.sql              # MySQL database structure and sample data
-├── requirements.txt        # Required python packages
-├── README.md               # This file
+├── templates/                  # HTML Templates
+│   ├── base.html              # Base template with navbar
+│   ├── login.html             # Login/Register page
+│   ├── register.html          # Standalone register page
+│   ├── menu.html              # Food menu display
+│   ├── checkout.html          # Order checkout
+│   ├── order_history.html     # Order history page
+│   └── 404.html               # Error page
 │
-└── images/                 # Folder containing food images
-    ├── burger.png
-    ├── pizza.png
-    ├── pasta.png
-    ├── sandwich.png
-    ├── fries.png
-    ├── noodles.png
-    ├── biryani.png         (placeholder)
-    ├── coffee.png          (placeholder)
-    ├── juice.png           (placeholder)
-    └── cake.png            (placeholder)
+├── static/                     # Static files (CSS, JS, Images)
+│   ├── css/
+│   │   ├── style.css          # Main stylesheet
+│   │   ├── auth.css           # Authentication page styles
+│   │   ├── menu.css           # Menu page styles
+│   │   ├── checkout.css       # Checkout page styles
+│   │   └── orders.css         # Order history styles
+│   │
+│   └── js/
+│       ├── main.js            # Cart management & common functions
+│       ├── auth.js            # Login/register logic
+│       ├── menu.js            # Menu & search functionality
+│       ├── checkout.js        # Checkout logic
+│       └── orders.js          # Order history logic
+│
+├── images/                     # Food images (optional)
+└── README.md                   # This file
 ```
 
-## Features Complete
+## 🛠️ Installation & Setup
 
-1. **Modular Codebase:** Code is split into logical files (`auth`, `menu`, `billing`, `history`, `db`).
-2. **OOP Architecture:** Uses Python classes (`Database`, `LoginWindow`, `FoodApp`, `BillingSystem`, `OrderHistory`).
-3. **Database Integration:** Uses `mysql-connector-python` to perform CRUD operations on 4 tables.
-4. **Authentication:** User login and registration with SHA-256 password hashing. Admin role support.
-5. **Modern UI:** Uses `tkinter.ttk` widgets, custom fonts, color schemes, and `Treeview` tables.
-6. **Cart Management:** Add to cart (with quantity spinbox), remove item, clear cart, total calculation.
-7. **Search Functionality:** Real-time food searching in the menu.
-8. **Billing System:** Generates a formatted text receipt and saves the order to the database.
-9. **Order History:** Users can view their past orders and the detailed line items.
-10. **Error Handling:** `try-except` blocks around database operations, validations for empty inputs and quantities.
+### Prerequisites
+- **Python 3.7+**
+- **pip** (Python package manager)
+
+### Step 1: Clone/Download the Project
+```bash
+cd py-project
+```
+
+### Step 2: Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### Step 3: Setup SQLite Database
+
+Run the setup script:
+
+```bash
+python setup_db.py
+```
+
+This will:
+- Create the `food_ordering.db` SQLite file
+- Create all necessary tables (users, menu_items, orders, order_items)
+- Insert sample users and menu items
+
+### Step 4: Update Database Path (optional)
+
+Edit `config.py` and update the database file path if needed:
+
+```python
+DB_PATH = "food_ordering.db"
+```
+
+## 🚀 Running the Application
+
+### Start the Flask Development Server
+```bash
+python app.py
+```
+
+The application will be available at: **http://localhost:5000**
+
+### Console Output
+```
+ * Serving Flask app 'app'
+ * Debug mode: on
+ * Running on http://127.0.0.1:5000
+```
+
+## 👤 Test Accounts
+
+After running `setup_db.py`, you can login with:
+
+**Regular User:**
+- Username: `john_doe`
+- Password: `password` (register with this password)
+
+**Admin User:**
+- Username: `admin`
+- Password: `password` (register with this password)
+
+## 📖 How to Use
+
+### 1. **Registration**
+   - Click on the "Register" tab
+   - Fill in username, password, and confirm password
+   - Click "Create Account"
+
+### 2. **Login**
+   - Enter your username and password
+   - Click "Login"
+
+### 3. **Browse Menu**
+   - View all available food items
+   - Use search bar to find specific items
+   - Click "Add" to add items to cart
+
+### 4. **Shopping Cart**
+   - Click the cart icon in the top-right
+   - Adjust quantities or remove items
+   - View total price
+   - Click "Checkout" when ready
+
+### 5. **Checkout**
+   - Enter delivery address
+   - Enter phone number
+   - Select payment method
+   - Review order summary
+   - Click "Place Order"
+
+### 6. **View Orders**
+   - Click "My Orders" in navigation
+   - View all your past orders
+   - Click "View Details" to see order items
+
+## 🎨 UI/UX Features
+
+- **Color Scheme**: Modern indigo and orange theme
+- **Responsive Grid**: Cards adapt to screen size
+- **Smooth Animations**: Hover effects and transitions
+- **Icons**: Font Awesome icons throughout
+- **Dark Mode Ready**: Easy to adapt for dark mode
+- **Accessibility**: Semantic HTML and proper ARIA labels
+
+## 🔌 API Endpoints
+
+### Authentication
+- `POST /login` - User login
+- `POST /register` - User registration
+- `GET /logout` - User logout
+
+### Menu & Items
+- `GET /api/menu` - Get all menu items
+- `GET /api/search?q=query` - Search menu items
+
+### Cart
+- `GET /api/cart` - Get cart contents
+- `POST /api/cart/add` - Add item to cart
+- `PUT /api/cart/update/<id>` - Update item quantity
+- `DELETE /api/cart/remove/<id>` - Remove item
+- `POST /api/cart/clear` - Clear entire cart
+
+### Orders
+- `POST /api/place-order` - Place new order
+- `GET /api/orders` - Get user's orders
+- `GET /api/order-details/<id>` - Get order details
+
+## 🛡️ Security Features
+
+- ✅ **Password Hashing**: Using Werkzeug security
+- ✅ **Session Management**: Flask sessions for user authentication
+- ✅ **SQL Injection Prevention**: Parameterized queries
+- ✅ **CSRF Protection**: Can be enhanced with Flask-WTF
+- ✅ **User Authorization**: Orders are tied to authenticated users
+
+## 🐛 Troubleshooting
+
+### "ModuleNotFoundError: No module named 'flask'"
+```bash
+pip install -r requirements.txt
+```
+
+### "MySQL Connection Error"
+- Ensure MySQL is running
+- Check database credentials in `config.py`
+- Run `python setup_db.py` to create database
+
+### "Port 5000 already in use"
+Edit `app.py` and change the port:
+```python
+app.run(debug=True, host='localhost', port=5001)
+```
+
+### "Cart not saving"
+- Clear browser cookies/localStorage
+- Check browser console for JavaScript errors
+- Verify Flask is running
+
+## 📱 Browser Compatibility
+
+- ✅ Chrome/Edge (Latest)
+- ✅ Firefox (Latest)
+- ✅ Safari (Latest)
+- ✅ Mobile browsers (iOS Safari, Chrome Mobile)
+
+## 🚀 Deployment
+
+### For Production:
+
+1. **Disable Debug Mode**
+   ```python
+   app.run(debug=False)
+   ```
+
+2. **Use Production Server** (Gunicorn)
+   ```bash
+   pip install gunicorn
+   gunicorn -w 4 -b 0.0.0.0:5000 app:app
+   ```
+
+3. **Set Strong Secret Key**
+   ```python
+   app.secret_key = 'your-long-random-secret-key'
+   ```
+
+4. **Use Environment Variables**
+   - Store database credentials in `.env` file
+   - Load using python-dotenv
+
+5. **Enable HTTPS/SSL**
+   - Use Nginx reverse proxy
+   - Get SSL certificate from Let's Encrypt
+
+## 📝 Future Enhancements
+
+- [ ] Admin dashboard for managing orders
+- [ ] User profile management
+- [ ] Real-time order tracking
+- [ ] Payment gateway integration
+- [ ] Email notifications
+- [ ] Review and ratings system
+- [ ] Discount codes and promotions
+- [ ] Multiple delivery address support
+- [ ] Order cancellation
+- [ ] Dark mode support
+
+## 📞 Support
+
+For issues or questions, check:
+- Flask Documentation: https://flask.palletsprojects.com/
+- MySQL Documentation: https://dev.mysql.com/doc/
+- Bootstrap Documentation: https://getbootstrap.com/docs/
+
+## 📄 License
+
+This project is open source and available for educational purposes.
+
+## 🎓 Credits
+
+Original Tkinter version | Converted to Flask web application
 
 ---
 
-## Step-by-Step Run Instructions
+**Enjoy using FoodHub! 🍕🍔🍜**
+
 
 1. **Install MySQL & Start Server:**
    Ensure MySQL (e.g., via XAMPP or MySQL Workbench) is installed and the service is running on your machine (default port 3306).

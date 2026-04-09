@@ -1,16 +1,18 @@
 """
-Configuration and Constants
+Configuration and Constants for Flask Application
 """
 
-# MySQL Database Configuration
-DB_HOST = "localhost"
-DB_USER = "root"
-DB_PASSWORD = "rudra2602"  # Update this if your MySQL has a password
-DB_NAME = "food_ordering_db"
+# SQLite database configuration
+DB_PATH = "food_ordering.db"
+DB_NAME = DB_PATH  # Backward-compatible alias used by legacy scripts
+
+# Flask Configuration
+DEBUG = True
+SECRET_KEY = "your-secret-key-change-in-production"
 
 # Application Settings
-APP_TITLE = "Online Food Ordering System"
-APP_GEOMETRY = "1024x768"
+APP_TITLE = "FoodHub - Online Food Delivery"
+APP_VERSION = "1.0.0"
 
 # UI Colors (Ultra-Premium Modern Theme)
 BG_COLOR = "#F0F2F5"          # Soft light gray (Facebook-style)
@@ -26,16 +28,9 @@ SUCCESS_COLOR = "#00C853"
 CARD_BG = "#FFFFFF"
 BORDER_COLOR = "#E0E0E0"
 
-# Fonts (System UI stack)
-FONT_FAMILY = "Segoe UI"
-FONT_HEADING = (FONT_FAMILY, 24, "bold")
-FONT_SUBHEADING = (FONT_FAMILY, 14, "bold")
-FONT_NORMAL = (FONT_FAMILY, 10)
-FONT_BTN = (FONT_FAMILY, 10, "bold")
-FONT_PRICE = (FONT_FAMILY, 18, "bold")
+# Pagination
+ITEMS_PER_PAGE = 12
 
-# Layout Tokens
-CARD_WIDTH = 400
-CARD_HEIGHT = 480
-IMG_SIZE = (240, 240)
-GRID_COLS = 2
+# Tax and Fees
+TAX_RATE = 0.10  # 10%
+DELIVERY_FEE = 2.00

@@ -40,6 +40,8 @@ def setup_database():
                 price REAL NOT NULL,
                 category TEXT,
                 image_path TEXT,
+                is_veg INTEGER NOT NULL DEFAULT 1,
+                prep_time_minutes INTEGER NOT NULL DEFAULT 30,
                 is_available INTEGER DEFAULT 1,
                 created_at TEXT DEFAULT CURRENT_TIMESTAMP
             )
@@ -55,6 +57,10 @@ def setup_database():
                 total_amount REAL NOT NULL,
                 delivery_address TEXT,
                 phone_number TEXT,
+                address_label TEXT,
+                building_name TEXT,
+                flat_no TEXT,
+                address_id INTEGER,
                 status TEXT DEFAULT 'Pending',
                 notes TEXT,
                 created_at TEXT DEFAULT CURRENT_TIMESTAMP,
@@ -73,6 +79,62 @@ def setup_database():
                 price REAL NOT NULL,
                 FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
                 FOREIGN KEY (food_item_id) REFERENCES menu_items(id)
+            )
+            """
+        )
+
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS addresses (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER NOT NULL,
+                label TEXT NOT NULL DEFAULT 'Other',
+                address TEXT NOT NULL,
+                building_name TEXT,
+                flat_no TEXT,
+                is_default INTEGER NOT NULL DEFAULT 0,
+                created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            )
+            """
+        )
+
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS order_reviews (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER NOT NULL,
+                order_id INTEGER NOT NULL,
+                rating INTEGER NOT NULL CHECK (rating BETWEEN 1 AND 5),
+                comment TEXT,
+                status TEXT NOT NULL DEFAULT 'pending',
+                moderated_by INTEGER,
+                moderated_at TEXT,
+                created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE(user_id, order_id),
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+                FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
+            )
+            """
+        )
+
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS item_reviews (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER NOT NULL,
+                order_id INTEGER NOT NULL,
+                menu_item_id INTEGER NOT NULL,
+                rating INTEGER NOT NULL CHECK (rating BETWEEN 1 AND 5),
+                comment TEXT,
+                status TEXT NOT NULL DEFAULT 'pending',
+                moderated_by INTEGER,
+                moderated_at TEXT,
+                created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE(user_id, order_id, menu_item_id),
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+                FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+                FOREIGN KEY (menu_item_id) REFERENCES menu_items(id) ON DELETE CASCADE
             )
             """
         )
@@ -101,29 +163,29 @@ def setup_database():
         )
 
         menu_data = [
-            ("Classic Burger", "Juicy burger with lettuce, tomato, and cheese", 399, "Burgers", "burger.png"),
-            ("Margherita Pizza", "Fresh mozzarella, basil, and tomato sauce on crispy crust", 599, "Pizza", "pizza.png"),
-            ("Spaghetti Carbonara", "Creamy pasta with bacon and parmesan cheese", 499, "Pasta", "pasta.png"),
-            ("Grilled Chicken Sandwich", "Tender grilled chicken with fresh vegetables", 349, "Sandwiches", "sandwich.png"),
-            ("Crispy French Fries", "Golden and delicious fried potatoes with salt", 199, "Sides", "fries.png"),
-            ("Thai Noodles", "Stir-fried noodles with vegetables and spicy sauce", 399, "Noodles", "noodles.png"),
-            ("Vegetable Biryani", "Fragrant rice with vegetables and aromatic spices", 549, "Rice Dishes", "biryani.png"),
-            ("Iced Coffee", "Refreshing cold coffee with ice and cream", 249, "Beverages", "coffee.png"),
-            ("Tropical Juice", "Fresh blend of tropical fruits", 299, "Beverages", "juice.png"),
-            ("Chocolate Cake", "Rich and moist chocolate layer cake", 349, "Desserts", "cake.png"),
-            ("Paneer Butter Masala", "Rich tomato-butter gravy with soft paneer cubes", 429, "Indian Main Course", "paneer-butter-masala.jpeg"),
-            ("Dal Makhani", "Slow-cooked black lentils in creamy buttery gravy", 349, "Dal & Gravy", "dal_makhani.png"),
-            ("Kadai Paneer", "Paneer tossed with capsicum in spicy kadai masala", 399, "Indian Main Course", "kadai_paneer.png"),
-            ("Butter Chicken", "Tender chicken in creamy tomato-butter curry", 499, "Indian Curry", "butter_chicken.png"),
-            ("Chole Masala", "Punjabi chickpea curry cooked with aromatic spices", 329, "Indian Curry", "chole_masala.png"),
-            ("Jeera Rice", "Fragrant basmati rice tempered with cumin", 239, "Rice & Biryani", "jeera_rice.png"),
+            ("Classic Burger", "Juicy burger with lettuce, tomato, and cheese", 399, "Burgers", "burger.png", 0, 25),
+            ("Margherita Pizza", "Fresh mozzarella, basil, and tomato sauce on crispy crust", 599, "Pizza", "pizza.png", 1, 30),
+            ("Spaghetti Carbonara", "Creamy pasta with bacon and parmesan cheese", 499, "Pasta", "pasta.png", 0, 22),
+            ("Grilled Chicken Sandwich", "Tender grilled chicken with fresh vegetables", 349, "Sandwiches", "sandwich.png", 0, 18),
+            ("Crispy French Fries", "Golden and delicious fried potatoes with salt", 199, "Sides", "fries.png", 1, 12),
+            ("Thai Noodles", "Stir-fried noodles with vegetables and spicy sauce", 399, "Noodles", "noodles.png", 1, 20),
+            ("Vegetable Biryani", "Fragrant rice with vegetables and aromatic spices", 549, "Rice Dishes", "biryani.png", 1, 32),
+            ("Iced Coffee", "Refreshing cold coffee with ice and cream", 249, "Beverages", "coffee.png", 1, 8),
+            ("Tropical Juice", "Fresh blend of tropical fruits", 299, "Beverages", "juice.png", 1, 8),
+            ("Chocolate Cake", "Rich and moist chocolate layer cake", 349, "Desserts", "cake.png", 1, 10),
+            ("Paneer Butter Masala", "Rich tomato-butter gravy with soft paneer cubes", 429, "Indian Main Course", "paneer-butter-masala.jpeg", 1, 28),
+            ("Dal Makhani", "Slow-cooked black lentils in creamy buttery gravy", 349, "Dal & Gravy", "dal_makhani.png", 1, 26),
+            ("Kadai Paneer", "Paneer tossed with capsicum in spicy kadai masala", 399, "Indian Main Course", "kadai_paneer.png", 1, 24),
+            ("Butter Chicken", "Tender chicken in creamy tomato-butter curry", 499, "Indian Curry", "butter_chicken.png", 0, 28),
+            ("Chole Masala", "Punjabi chickpea curry cooked with aromatic spices", 329, "Indian Curry", "chole_masala.png", 1, 22),
+            ("Jeera Rice", "Fragrant basmati rice tempered with cumin", 239, "Rice & Biryani", "jeera_rice.png", 1, 15),
         ]
 
         cursor.execute("DELETE FROM menu_items")
         cursor.executemany(
             """
-            INSERT INTO menu_items (name, description, price, category, image_path)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO menu_items (name, description, price, category, image_path, is_veg, prep_time_minutes)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
             """,
             menu_data,
         )

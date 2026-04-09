@@ -87,7 +87,14 @@ class OrderHistory:
 
     def load_orders(self):
         """Fetch all orders from DB for the user."""
-        query = "SELECT id, DATE_FORMAT(order_date, '%Y-%m-%d %H:%i:%s') as fdate, total_amount FROM orders WHERE user_id = %s ORDER BY order_date DESC"
+        query = """
+            SELECT id,
+                   COALESCE(strftime('%Y-%m-%d %H:%M:%S', order_date), order_date) AS fdate,
+                   total_amount
+            FROM orders
+            WHERE user_id = %s
+            ORDER BY order_date DESC
+        """
         orders = self.db.fetch_all(query, (self.user_id,))
         
         for row in self.tree_orders.get_children():
