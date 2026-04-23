@@ -41,13 +41,14 @@ Here is a visual tour of the application's core interfaces and user workflows.
 
 ### 1. Authentication
 *Users can create accounts and securely log into the system.*
-*(Placeholder ready for Login/Register Screenshot)*
-![Login Page](screenshots/Screenshot 2026-04-23 153844.png) 
-*(Note: Displaying Menu as fallback. Please add a dedicated login screenshot to the folder if needed)*
+![Login Page](screenshots/login.png) 
+
+![Register Page](screenshots/register.png)
+
 
 ### 2. Menu & Browsing
 *Customers can browse a variety of delicious items, filter by Veg/Non-Veg, and search for specific cravings.*
-![Menu Page](screenshots/Screenshot 2026-04-23 153844.png)
+![Menu Page](screenshots/online-food-delivery-screenshot-02.png)
 *Browsing the expansive food menu with rich item cards.*
 
 ![Menu Search & Filters](screenshots/Screenshot 2026-04-23 153902.png)
@@ -96,8 +97,6 @@ Here is a visual tour of the application's core interfaces and user workflows.
 Because visualizing the flow is important, please view the complete application walkthrough video below:
 
 [▶️ Click here to view Project Demo Video](docs/video/demo.mp4)
-
-*(Note: Ensure `docs/video/demo.mp4` contains your recorded project showcase)*
 
 ---
 
@@ -184,4 +183,4 @@ http://127.0.0.1:5000
 - **Production Mode:** Before deploying to a live web server (like PythonAnywhere, Heroku, or AWS), edit `app.py` or use environment variables to change the `app.secret_key` to a strong, randomized cryptographic string.
 
 ---
-*Developed with ❤️ by the team for educational and conceptual demonstration.*
+
