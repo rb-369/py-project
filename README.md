@@ -42,15 +42,15 @@ Here is a visual tour of the application's core interfaces and user workflows.
 ### 1. Authentication
 *Users can create accounts and securely log into the system.*
 *(Placeholder ready for Login/Register Screenshot)*
-![Login Page](screenshots/online-food-delivery-screenshot-02.png) 
+![Login Page](screenshots/Screenshot 2026-04-23 153844.png) 
 *(Note: Displaying Menu as fallback. Please add a dedicated login screenshot to the folder if needed)*
 
 ### 2. Menu & Browsing
 *Customers can browse a variety of delicious items, filter by Veg/Non-Veg, and search for specific cravings.*
-![Menu Page](screenshots/online-food-delivery-screenshot-02.png)
+![Menu Page](screenshots/Screenshot 2026-04-23 153844.png)
 *Browsing the expansive food menu with rich item cards.*
 
-![Menu Search & Filters](screenshots/online-food-delivery-screenshot-03.png)
+![Menu Search & Filters](screenshots/Screenshot 2026-04-23 153902.png)
 *Using advanced search and category filters to find the perfect meal.*
 
 ### 3. Shopping Cart

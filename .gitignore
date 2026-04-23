@@ -74,3 +74,4 @@ __pycache__
 .vscode/
 INDEX.md
 INSTALLATION.md
+__pycache__/
